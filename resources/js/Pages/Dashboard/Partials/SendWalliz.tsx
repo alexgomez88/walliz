@@ -6,7 +6,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import {Transition} from "@headlessui/react";
 import InputError from "@/Components/InputError";
 
-export default function SendWalliz({}: PropsWithChildren) {
+export default function SendWalliz({parentId}: PropsWithChildren<{parentId: number}>) {
     const messageInput = useRef<HTMLInputElement>();
 
     const {
@@ -19,6 +19,7 @@ export default function SendWalliz({}: PropsWithChildren) {
         recentlySuccessful
     } = useForm({
         message: '',
+        message_id: parentId,
     });
 
     const sendMessage: FormEventHandler = (e) => {
@@ -38,7 +39,7 @@ export default function SendWalliz({}: PropsWithChildren) {
 
     return <form onSubmit={sendMessage}>
         <div>
-            <InputLabel htmlFor="send_message" value="Show to the wall!"/>
+            <InputLabel htmlFor="send_message" value={parentId ? "Reply" : "Show to the wall!"}/>
             <InputError message={errors.message} className="mt-2" />
         </div>
         <div className="flex flex-row ">
@@ -50,7 +51,7 @@ export default function SendWalliz({}: PropsWithChildren) {
                 className="block w-full rounded-r-none"
             />
             <PrimaryButton className="rounded-l-none" disabled={processing}>
-                Enviar
+                Send
             </PrimaryButton>
         </div>
         <Transition

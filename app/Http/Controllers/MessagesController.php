@@ -20,7 +20,8 @@ class MessagesController extends Controller
         $request->user()->messages()->create([
             'content' => [
                 'message' => $request->message,
-            ]
+            ],
+            'message_id' => $request->message_id ?? null,
         ]);
 
         return Redirect::route('dashboard');

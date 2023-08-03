@@ -28,7 +28,11 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/Index', [
-        'last_messages' => Message::with('user')->latest()->take(5)->get()
+        'last_messages' =>
+            Message::whereNull('message_id')
+                ->latest()
+                ->take(5)
+                ->get()
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
